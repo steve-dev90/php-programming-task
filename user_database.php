@@ -34,10 +34,13 @@ class CreateUsersTable {
     }
   }
 
-  public function insertUser() {
+  public function insertUser($first_name, $surname, $email) {
     // Attempt insert query execution
-    $sql = "INSERT INTO users (first_name, surname, email) VALUES ('Peter', 'Parker', 'peterparker@mail.com')";
-    if(mysqli_query($this->$mysqli, $sql)){
+    $sql = "INSERT INTO users (first_name, surname, email) VALUES (?, ?, ?)";
+    $statement = $this->$mysqli->prepare($sql);
+    $statement->bind_param('sss', $first_name, $surname, $email);
+
+    if($statement->execute()){
       echo "Records inserted successfully.";
     } else{
       echo "ERROR: Could not execute $sql. " . mysqli_error($this->$mysqli);
@@ -51,7 +54,7 @@ class CreateUsersTable {
 
 $obj = new CreateUsersTable();
 $obj->createUsersTable();
-$obj->insertUser();
+$obj->insertUser('Sue', 'Tor', 'sue@suetown.com');
 
 
 
