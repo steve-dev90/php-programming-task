@@ -2,18 +2,15 @@
 <?php
 $shortopts = "";
 $longopts  = array(
-  "help"           // No value
+  "help"
 );
 $options = getopt($shortopts, $longopts);
 var_dump($options);
-switch ($options["help"])
-{
-  case false;
-    directives_list();
-    break;
-}
 
-function directives_list(){
+if ($options["help"] == false)
+  directives_list();
+
+function directives_list() {
  echo "
   --file [csv file name] – this is the name of the CSV to be parsed\n
   --create_table – this will cause the MySQL users table to be built (and no further
