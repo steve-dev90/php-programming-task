@@ -4,12 +4,12 @@ $shortopts = "";
 $longopts  = array(
   "help",
   "file::",
-  "dry_run"
+  "dry_run",
+  "create_table"
 );
 $options = getopt($shortopts, $longopts);
-var_dump($options);
-
-echo "hello \n", $argv[2], $options["file"], "\n";
+// var_dump($options);
+// echo "hello \n", $argv[2], $options["file"], "\n";
 
 for ($i = 1; $i < $argc; $i++) {
   switch ($argv[$i]) {
@@ -19,10 +19,11 @@ for ($i = 1; $i < $argc; $i++) {
   case '--dry_run';
     read_csv();
     break;
+  case '--create_table';
+    create_table();
+    break;
   }
 }
-
-// if ($options["file"] && )
 
 function directives_list() {
  echo "
@@ -50,6 +51,10 @@ function read_csv() {
     fclose($handle);
   }
   var_dump($users);
+}
+
+function create_table() {
+
 }
 
 ?>
