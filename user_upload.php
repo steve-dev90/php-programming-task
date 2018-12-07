@@ -2,13 +2,27 @@
 <?php
 $shortopts = "";
 $longopts  = array(
-  "help"
+  "help",
+  "file::",
+  "dry_run"
 );
 $options = getopt($shortopts, $longopts);
 var_dump($options);
 
-if ($options["help"] == false)
-  directives_list();
+echo "hello \n", $argv[2], $options["file"], "\n";
+
+for ($i = 1; $i < $argc; $i++) {
+  switch ($argv[$i]) {
+  case '--help';
+    directives_list();
+    break;
+  case '--dry_run';
+    read_csv();
+    break;
+  }
+}
+
+// if ($options["file"] && )
 
 function directives_list() {
  echo "
@@ -22,6 +36,20 @@ function directives_list() {
   -p – MySQL password\n
   -h – MySQL host\n
   --help – which will output the above list of directives with details\n";
+}
+
+function read_csv() {
+  $filename = 'users.csv';
+  $users = [];
+  if (($handle = fopen("{$filename}", "r")) !== FALSE)
+  {
+    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
+    {
+      $users[] = $data;
+    }
+    fclose($handle);
+  }
+  var_dump($users);
 }
 
 ?>
