@@ -19,6 +19,9 @@ class CreateUsersTable {
   }
 
   public function createUsersTable() {
+
+    $this->removeExistingUsersTable();
+
     // Attempt create table query execution
     $sql = "CREATE TABLE users(
       id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -28,9 +31,19 @@ class CreateUsersTable {
     )";
 
     if(mysqli_query($this->$mysqli, $sql)){
-      echo "Table created successfully.";
+      echo "Table users created successfully.";
     } else{
       echo "ERROR: Could not execute $sql. " . mysqli_error($this->$mysqli);
+    }
+  }
+
+  public function removeExistingUsersTable() {
+    $sql = "DROP TABLE IF EXISTS users";
+
+    if(mysqli_query($this->$mysqli, $sql)) {
+       echo "Table users is deleted successfully";
+    } else {
+       echo "Table users has not been deleted\n";
     }
   }
 
