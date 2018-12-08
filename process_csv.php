@@ -10,7 +10,7 @@ class ProcessCsv
   public function __construct($file, $dry_run) {
     $this->file = $file;
     $this->dry_run = $dry_run;
-    if ($dry_run) {
+    if (!$dry_run) {
       $this->db = new CreateUsersTable();
       $this->db->createUsersTable();
     }
@@ -30,8 +30,7 @@ class ProcessCsv
     echo ("\n");
     $obj = new RecordPreProcessing($data);
     $processed_data = $obj->preProcess();
-    if ($processed_data && $this->dry_run) {
-      echo "hello \n";
+    if ($processed_data && !$this->dry_run) {
       $this->db->insertUser(
         $processed_data['first_name'],
         $processed_data['surname'],
@@ -41,7 +40,6 @@ class ProcessCsv
   }
 }
 
-$obj = new ProcessCsv('users.csv', true);
-$obj->process();
+
 
 ?>

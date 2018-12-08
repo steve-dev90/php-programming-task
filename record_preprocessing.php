@@ -7,14 +7,14 @@ class RecordPreProcessing
   private $first_name;
 
   public function __construct($record) {
-    $this->first_name = $this->capitalise($record[0]);
-    $this->surname = $this->capitalise($record[1]);
-    $this->email = strtolower($record[2]);
+    $this->first_name = $this->capitalise(trim($record[0]));
+    $this->surname = $this->capitalise(trim($record[1]));
+    $this->email = strtolower(trim($record[2]));
   }
 
   public function preProcess() {
     if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-      echo 'Record email is invalid';
+      echo 'Invalid email: ' . $this->email . ' provided for ' . $this->first_name . '' . $this->surname . "\n";
       return false;
     } else {
       return array (

@@ -3,14 +3,19 @@
 // require './user_database.php';
 require_once './command_line.php';
 
-$short_options = "uph";
+$short_options = "u:p:h:";
+// $shortopts  = "";
+// $shortopts .= "u:";
+// $shortopts .= "u:";
 $long_options  = array(
   "help",
-  "file::",
+  "file:",
   "dry_run",
   "create_table"
 );
+
 $options = getopt($short_options, $long_options);
+var_dump($options);
 $input_options = new CommandLine ($options);
 $input_options->process_commands();
 
