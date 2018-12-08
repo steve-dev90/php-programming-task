@@ -1,7 +1,8 @@
 #!/Applications/MAMP/bin/php/php7.0.32/bin/php
 <?php
 
-class RecordPreProcessing {
+class RecordPreProcessing
+{
 
   private $first_name;
 
