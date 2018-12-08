@@ -41,22 +41,4 @@ function directives_list() {
   --help – which will output the above list of directives with details\n";
 }
 
-function read_csv() {
-  $filename = 'users.csv';
-  $users = [];
-  if (($handle = fopen("{$filename}", "r")) !== FALSE)
-  {
-    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
-    {
-      $users[] = $data;
-    }
-    fclose($handle);
-  }
-  var_dump($users);
-}
-
-function create_table() {
-
-}
-
 ?>

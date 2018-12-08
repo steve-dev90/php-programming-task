@@ -23,13 +23,16 @@ class ProcessCsv {
     var_dump($data);
     echo ("\n");
     $obj = new RecordPreProcessing($data);
-    var_dump($obj->preProcess());
-    echo "\n";
+    $processed_data = $obj->preProcess();
+    if ($processed_data && $this->dry_run) {
+      echo "Dada \n";
+      var_dump($obj->preProcess());
+      echo "\n";
+    }
   }
 }
 
-$obj = new ProcessCsv('users.csv', '');
+$obj = new ProcessCsv('users.csv', true);
 $obj->process();
-
 
 ?>

@@ -8,7 +8,7 @@ class RecordPreProcessing {
   public function __construct($record) {
     $this->first_name = $this->capitalise($record[0]);
     $this->surname = $this->capitalise($record[1]);
-    $this->email = $record[2];
+    $this->email = strtolower($record[2]);
   }
 
   public function preProcess() {
