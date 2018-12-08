@@ -19,9 +19,7 @@ class CreateUsersTable {
   }
 
   public function createUsersTable() {
-
     $this->removeExistingUsersTable();
-
     // Attempt create table query execution
     $sql = "CREATE TABLE users(
       id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -68,9 +66,6 @@ class CreateUsersTable {
 $obj = new CreateUsersTable();
 $obj->createUsersTable();
 $obj->insertUser('Sue', 'Tor', 'sue@suetown.com');
-
-
-
 
 ?>
 
