@@ -13,12 +13,13 @@ class RecordPreProcessing {
 
   public function preProcess() {
     if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+      echo 'Record email is invalid';
       return false;
     } else {
       return array (
-        "first_name" => $this->first_name,
-        "surname" => $this->surname,
-        "email" => $this->email
+        'first_name' => $this->first_name,
+        'surname' => $this->surname,
+        'email' => $this->email
       );
     }
   }
@@ -28,11 +29,5 @@ class RecordPreProcessing {
     return ucfirst(strtolower($uncap_name));
   }
 }
-
-$record = array("MiKe", "COnner", "mike@conner.com");
-// var_dump($record);
-$obj = new RecordPreProcessing($record);
-var_dump($obj->preProcess());
-echo "\n"
 
 ?>

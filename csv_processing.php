@@ -1,15 +1,35 @@
+#!/Applications/MAMP/bin/php/php7.0.32/bin/php
 <?php
-function read_csv() {
-  $filename = 'users.csv';
-  $users = [];
-  if (($handle = fopen("{$filename}", "r")) !== FALSE)
-  {
-    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
-    {
-      $users[] = $data;
-    }
-    fclose($handle);
+
+require './record_preprocessing.php';
+
+class ProcessCsv {
+
+  public function __construct($file, $dry_run) {
+    $this->file = $file;
+    $this->dry_run = $dry_run;
   }
-  var_dump($users);
+
+  public function process() {
+    if (($handle = fopen("{$this->file}", "r")) !== false) {
+      while (($data = fgetcsv($handle, 1000, ",")) !== false) {
+        $this->process_row($data);
+      }
+      fclose($handle);
+    }
+  }
+
+  private function process_row($data) {
+    var_dump($data);
+    echo ("\n");
+    $obj = new RecordPreProcessing($data);
+    var_dump($obj->preProcess());
+    echo "\n";
+  }
 }
+
+$obj = new ProcessCsv('users.csv', '');
+$obj->process();
+
+
 ?>
