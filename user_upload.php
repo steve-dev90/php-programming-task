@@ -3,10 +3,7 @@
 // require './user_database.php';
 require_once './command_line.php';
 
-$short_options = "u:p:h:";
-// $shortopts  = "";
-// $shortopts .= "u:";
-// $shortopts .= "u:";
+$short_options = "u:p:h:t::d::";
 $long_options  = array(
   "help",
   "file:",

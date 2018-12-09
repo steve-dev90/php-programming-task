@@ -1,17 +1,18 @@
 #!/Applications/MAMP/bin/php/php7.0.32/bin/php
 <?php
 
-DEFINE('DB_USERNAME', 'root');
-DEFINE('DB_PASSWORD', 'root');
-DEFINE('DB_PORT', '8889');
-DEFINE('DB_HOST', '127.0.0.1');
-DEFINE('DB_DATABASE', 'progtask');
-
+//      DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT
 class CreateUsersTable
 {
 
-  public function __construct() {
-    $this->mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
+  public function __construct($config) {
+    $this->mysqli = new mysqli(
+      $config->get_host(),
+      $config->get_user_name(),
+      $config->get_password(),
+      $config->get_database(),
+      $config->get_port()
+    );
 
     if (mysqli_connect_error()) {
       die("ERROR: Could not connect. " . mysqli_connect_error());
@@ -32,7 +33,7 @@ class CreateUsersTable
     if(mysqli_query($this->mysqli, $sql)){
       echo "Table users created successfully.";
     } else{
-      echo "ERROR: Could not execute $sql. " . mysqli_error($this->mysqli);
+      die ("ERROR: Could not execute $sql. " . mysqli_error($this->mysqli));
     }
   }
 
@@ -42,7 +43,7 @@ class CreateUsersTable
     if(mysqli_query($this->mysqli, $sql)) {
        echo "Table users is deleted successfully";
     } else {
-       echo "Table users has not been deleted\n";
+       die( "Table users has not been deleted\n");
     }
   }
 
@@ -55,7 +56,7 @@ class CreateUsersTable
     if($statement->execute()){
       echo "Records inserted successfully.";
     } else{
-      echo "ERROR: Could not execute $sql. " . mysqli_error($this->mysqli);
+      die( "ERROR: Could not execute $sql. " . mysqli_error($this->mysqli));
     }
   }
 
