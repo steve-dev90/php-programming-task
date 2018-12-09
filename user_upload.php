@@ -1,31 +1,21 @@
 #!/Applications/MAMP/bin/php/php7.0.32/bin/php
 <?php
 // require './user_database.php';
+require_once './command_line.php';
 
-$shortopts = "";
-$longopts  = array(
+$short_options = "u:p:h:t::d::";
+$long_options  = array(
   "help",
-  "file::",
+  "file:",
   "dry_run",
   "create_table"
 );
-$options = getopt($shortopts, $longopts);
-// var_dump($options);
-// echo "hello \n", $argv[2], $options["file"], "\n";
 
-for ($i = 1; $i < $argc; $i++) {
-  switch ($argv[$i]) {
-  case '--help';
-    directives_list();
-    break;
-  case '--dry_run';
-    read_csv();
-    break;
-  case '--create_table';
-    create_table();
-    break;
-  }
-}
+$options = getopt($short_options, $long_options);
+var_dump($options);
+$input_options = new CommandLine ($options);
+$input_options->process_commands();
+
 
 function directives_list() {
  echo "

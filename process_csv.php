@@ -2,16 +2,16 @@
 <?php
 
 require './record_preprocessing.php';
-require './user_database.php';
+require './create_users_table.php';
 
 class ProcessCsv
 {
 
-  public function __construct($file, $dry_run) {
+  public function __construct($file, $dry_run, $db_config) {
     $this->file = $file;
     $this->dry_run = $dry_run;
-    if ($dry_run) {
-      $this->db = new CreateUsersTable();
+    if (!$dry_run) {
+      $this->db = new CreateUsersTable($db_config);
       $this->db->createUsersTable();
     }
   }
@@ -30,8 +30,7 @@ class ProcessCsv
     echo ("\n");
     $obj = new RecordPreProcessing($data);
     $processed_data = $obj->preProcess();
-    if ($processed_data && $this->dry_run) {
-      echo "hello \n";
+    if ($processed_data && !$this->dry_run) {
       $this->db->insertUser(
         $processed_data['first_name'],
         $processed_data['surname'],
@@ -41,7 +40,6 @@ class ProcessCsv
   }
 }
 
-$obj = new ProcessCsv('users.csv', true);
-$obj->process();
+
 
 ?>
