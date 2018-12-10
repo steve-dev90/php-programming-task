@@ -1,4 +1,3 @@
-#!/Applications/MAMP/bin/php/php7.0.32/bin/php
 <?php
 
 require './record-pre-processing.php';
@@ -6,10 +5,16 @@ require './create-users-table.php';
 
 class ProcessCsv
 {
-
   public function __construct($file, $dry_run, $db_config) {
+    if(!is_string($file)) {
+      die ('File name must be a string. Provided type: ' . gettype($file) . "\n\n");
+    }
+    if(!is_file($file) || !is_readable($file)) {
+      die ('The file could not be opened for reading. File: ' . $file . "\n\n");
+      //throw new RuntimeException
+    }
     $this->file = $file;
-    $this->handle = fopen($file, 'r');
+    $this->handle = $this->get_csv_handle();
     $this->dry_run = $dry_run;
     if (!$dry_run) {
       $this->db = new CreateUsersTable($db_config);
@@ -18,30 +23,35 @@ class ProcessCsv
   }
 
   public function process() {
-    if (($handle = fopen("{$this->file}", "r")) !== false) {
-      while (($data = fgetcsv($handle, 1000, ",")) !== false) {
-        $this->process_row($data);
+    $header_row = true;
+    while (($data = fgetcsv($this->handle, 1000, ',')) !== false) {
+      if ($header_row) {
+        $header_row = false;
+        continue;
       }
-      fclose($handle);
+      $this->process_row($data);
     }
+    fclose($this->handle);
   }
 
-  private function
+  private function get_csv_handle() {
+    $handle = fopen($this->file, 'r');
+    if (!$handle) {
+      die ('Encountered an error while reading CSV file: ' . $this->file . "\n\n");
+    }
+    return $handle;
+  }
 
   private function process_row($data) {
     var_dump($data);
-    $obj = new RecordPreProcessing($data);
-    $processed_data = $obj->preProcess();
-    if ($processed_data && !$this->dry_run) {
+    $data_process = new RecordPreProcessing($data);
+    $pre_processed_data = $data_process->preProcess();
+    if ($pre_processed_data && !$this->dry_run) {
       $this->db->insertUser(
-        $processed_data['first_name'],
-        $processed_data['surname'],
-        $processed_data['email']
+        $pre_processed_data['first_name'],
+        $pre_processed_data['surname'],
+        $pre_processed_data['email']
       );
     }
   }
 }
-
-
-
-?>
