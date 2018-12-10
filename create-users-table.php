@@ -1,10 +1,8 @@
 #!/Applications/MAMP/bin/php/php7.0.32/bin/php
 <?php
 
-//      DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT
 class CreateUsersTable
 {
-
   public function __construct($config) {
     $this->mysqli = new mysqli(
       $config->get_host(),
@@ -17,7 +15,7 @@ class CreateUsersTable
     if (mysqli_connect_error()) {
       die("ERROR: Could not connect. " . mysqli_connect_error());
     }
-    echo 'Connected successfully.';
+    echo 'Connected to database successfully\n';
   }
 
   public function createUsersTable() {
@@ -27,11 +25,11 @@ class CreateUsersTable
       id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
       first_name VARCHAR(30) NOT NULL,
       surname VARCHAR(30) NOT NULL,
-      email VARCHAR(70) NOT NULL
+      email VARCHAR(70) NOT NULL UNIQUE
     )";
 
     if(mysqli_query($this->mysqli, $sql)){
-      echo "Table users created successfully.";
+      echo "Table users created successfully\n";
     } else{
       die ("ERROR: Could not execute $sql. " . mysqli_error($this->mysqli));
     }
@@ -54,9 +52,9 @@ class CreateUsersTable
     $statement->bind_param('sss', $first_name, $surname, $email);
 
     if($statement->execute()){
-      echo "Records inserted successfully.";
+      echo "Records inserted successfully\n\n";
     } else{
-      die( "ERROR: Could not execute $sql. " . mysqli_error($this->mysqli));
+      echo "Warning: Could not insert record into database. " . mysqli_error($this->mysqli) . "\n\n";
     }
   }
 
@@ -64,6 +62,3 @@ class CreateUsersTable
     $this->mysqli->close();
   }
 }
-
-?>
-
