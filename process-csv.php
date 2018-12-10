@@ -7,10 +7,10 @@ class ProcessCsv
 {
   public function __construct($file, $dry_run, $db_config) {
     if(!is_string($file)) {
-      die ('File name must be a string. Provided type: ' . gettype($file) . "\n\n");
+      throw new RuntimeException ('File name must be a string. Provided type: ' . gettype($file) . "\n\n");
     }
     if(!is_file($file) || !is_readable($file)) {
-      die ('The file could not be opened for reading. File: ' . $file . "\n\n");
+      throw new RuntimeException ('The csv file could not be opened for reading. File: ' . $file . "\n\n");
       //throw new RuntimeException
     }
     $this->file = $file;
