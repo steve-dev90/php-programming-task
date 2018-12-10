@@ -1,5 +1,6 @@
-#!/Applications/MAMP/bin/php/php7.0.32/bin/php
 <?php
+
+//This class contains all database related functions
 
 class CreateUsersTable
 {
@@ -13,9 +14,9 @@ class CreateUsersTable
     );
 
     if (mysqli_connect_error()) {
-      die("ERROR: Could not connect. " . mysqli_connect_error());
+      throw new RuntimeException ('Could not connect to database, please check your configuration options. Error: ' . mysqli_connect_error() . "\n\n");
     }
-    echo 'Connected to database successfully\n';
+    echo 'Connected to database successfully\n\n';
   }
 
   public function createUsersTable() {
@@ -28,20 +29,16 @@ class CreateUsersTable
       email VARCHAR(70) NOT NULL UNIQUE
     )";
 
-    if(mysqli_query($this->mysqli, $sql)){
-      echo "Table users created successfully\n";
-    } else{
-      die ("ERROR: Could not execute $sql. " . mysqli_error($this->mysqli));
+    if(!mysqli_query($this->mysqli, $sql)){
+      throw new RuntimeException ('Could not create users table. Error: ' . mysqli_error($this->mysqli) . "\n\n");
     }
   }
 
   public function removeExistingUsersTable() {
     $sql = "DROP TABLE IF EXISTS users";
 
-    if(mysqli_query($this->mysqli, $sql)) {
-       echo "Table users is deleted successfully";
-    } else {
-       die( "Table users has not been deleted\n");
+    if(!mysqli_query($this->mysqli, $sql)) {
+      throw new RuntimeException ('Could not delete existing users table. Error: ' . mysqli_error($this->mysqli) . "\n\n");
     }
   }
 

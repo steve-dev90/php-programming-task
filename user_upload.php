@@ -12,6 +12,11 @@ $long_options  = array(
 );
 
 $options = getopt($short_options, $long_options);
-var_dump($options);
+
 $input_options = new CommandLine ($options);
-$input_options->process_commands();
+
+try {
+  $input_options->process_commands();
+} catch (Exception $ex) {
+  echo $ex->getMessage();
+}

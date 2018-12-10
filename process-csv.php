@@ -6,12 +6,8 @@ require './create-users-table.php';
 class ProcessCsv
 {
   public function __construct($file, $dry_run, $db_config) {
-    if(!is_string($file)) {
-      die ('File name must be a string. Provided type: ' . gettype($file) . "\n\n");
-    }
     if(!is_file($file) || !is_readable($file)) {
-      die ('The file could not be opened for reading. File: ' . $file . "\n\n");
-      //throw new RuntimeException
+      throw new RuntimeException ('The csv file could not be opened for reading. File: ' . $file . "\n\n");
     }
     $this->file = $file;
     $this->handle = $this->get_csv_handle();
@@ -37,7 +33,7 @@ class ProcessCsv
   private function get_csv_handle() {
     $handle = fopen($this->file, 'r');
     if (!$handle) {
-      die ('Encountered an error while reading CSV file: ' . $this->file . "\n\n");
+      throw new RuntimeException ('Encountered an error while reading CSV file: ' . $this->file . "\n\n");
     }
     return $handle;
   }
