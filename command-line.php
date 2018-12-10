@@ -1,10 +1,11 @@
-#!/Applications/MAMP/bin/php/php7.0.32/bin/php
 <?php
 
 require_once './process-csv.php';
 require_once './database-config.php';
 require_once './help.php';
 require_once './cli-errors.php';
+
+// This class interogates and processes the command line instruction.
 
 class CommandLine
 {
@@ -19,6 +20,7 @@ class CommandLine
     $this->process_csv($this->config_database());
   }
 
+  // If --help is specified, directives will be listed and no other action will be taken
   private function check_for_help() {
     if (array_key_exists('help', $this->options)) {
       $help = new Help;
@@ -28,22 +30,12 @@ class CommandLine
   }
 
   private function config_database() {
-    if (array_key_exists('t', $this->options)) {
-      $port = $this->options['t'];
-    } else {
-      $port = null;
-    }
-    if (array_key_exists('d', $this->options)) {
-      $database = $this->options['d'];
-    } else {
-      $database = null;
-    }
     $db_config = new DatabaseConfig (
       $this->options['u'],
       $this->options['p'],
       $this->options['h'],
-      $port,
-      $database
+      $this->options['t'],
+      $this->options['d']
     );
     return $db_config;
   }

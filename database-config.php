@@ -1,6 +1,7 @@
-#!/Applications/MAMP/bin/php/php7.0.32/bin/php
 <?php
-// u = 'root', p = 'root', h = '127.0.0.1' port = '8889' db = 'progtask'
+
+// Sets up database configuration options and hopefully proects them from inadvertent changes
+
 class DatabaseConfig
 {
   public function __construct($user_name, $password, $host, $port, $database) {
