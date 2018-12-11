@@ -4,6 +4,8 @@
 
 class CliErrors
 {
+  private $options;
+
   public function __construct($options) {
     $this->options = $options;
   }

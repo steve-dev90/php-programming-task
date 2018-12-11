@@ -1,10 +1,15 @@
 <?php
 
-require './record-pre-processing.php';
-require './create-users-table.php';
+require_once './record-pre-processing.php';
+require_once './create-users-table.php';
 
 class ProcessCsv
 {
+  private $file;
+  private $handle;
+  private $dry_run;
+  private $db;
+
   public function __construct($file, $dry_run, $db_config) {
     if(!is_file($file) || !is_readable($file)) {
       throw new RuntimeException ('The csv file could not be opened for reading. File: ' . $file . "\n\n");
@@ -18,6 +23,14 @@ class ProcessCsv
     }
   }
 
+  private function get_csv_handle() {
+    $handle = fopen($this->file, 'r');
+    if (!$handle) {
+      throw new RuntimeException ('Encountered an error while reading CSV file: ' . $this->file . "\n\n");
+    }
+    return $handle;
+  }
+
   public function process() {
     $header_row = true;
     while (($data = fgetcsv($this->handle, 1000, ',')) !== false) {
@@ -28,14 +41,6 @@ class ProcessCsv
       $this->process_row($data);
     }
     fclose($this->handle);
-  }
-
-  private function get_csv_handle() {
-    $handle = fopen($this->file, 'r');
-    if (!$handle) {
-      throw new RuntimeException ('Encountered an error while reading CSV file: ' . $this->file . "\n\n");
-    }
-    return $handle;
   }
 
   private function process_row($data) {
