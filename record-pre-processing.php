@@ -4,13 +4,17 @@
 
 class RecordPreProcessing
 {
+  private $first_name;
+  private $surname;
+  private $email;
+
   public function __construct($record) {
     $this->first_name = $record[0];
     $this->surname = $record[1];
     $this->email = trim($record[2]);
   }
 
-  public function preProcess() {
+  public function pre_process() {
     if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
       echo 'Invalid email: ' . $this->email . ' provided for ' . $this->first_name . '' . $this->surname . "\n";
       return false;

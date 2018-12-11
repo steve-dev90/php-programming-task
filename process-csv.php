@@ -41,7 +41,7 @@ class ProcessCsv
   private function process_row($data) {
     var_dump($data);
     $data_process = new RecordPreProcessing($data);
-    $pre_processed_data = $data_process->preProcess();
+    $pre_processed_data = $data_process->pre_process();
     if ($pre_processed_data && !$this->dry_run) {
       $this->db->insertUser(
         $pre_processed_data['first_name'],

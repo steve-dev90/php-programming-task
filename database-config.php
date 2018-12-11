@@ -4,6 +4,12 @@
 
 class DatabaseConfig
 {
+  private $user_name;
+  private $password;
+  private $host;
+  private $port;
+  private $database;
+
   public function __construct($user_name, $password, $host, $port, $database) {
     $this->user_name = $user_name;
     $this->password = $password;
