@@ -13,6 +13,12 @@ class CommandLine
 
   public function __construct($options) {
     $this->options = $options;
+    if (!array_key_exists("d", $this->options)) {
+      $this->options['d'] = 'progtask';
+    }
+    if (!array_key_exists("t", $this->options)) {
+      $this->options['t'] = 'port';
+    }
   }
 
   public function process_commands() {
@@ -36,7 +42,7 @@ class CommandLine
       $this->options['u'],
       $this->options['p'],
       $this->options['h'],
-      $this->options['t'],
+      $this->options['t'] && '',
       $this->options['d']
     );
     return $db_config;

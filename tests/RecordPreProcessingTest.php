@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-require './record-pre-processing.php';
+require_once './record-pre-processing.php';
 
 class RecordPreProcessingTest extends TestCase {
 
@@ -41,6 +41,27 @@ class RecordPreProcessingTest extends TestCase {
   public function testReturnsWithEmailWithTrailingWhiteSpace() {
     $pre_process = new RecordPreProcessing(['Bob', 'tOWN', '   bob@bobtown.com']);
     $actual = $pre_process->pre_process();
+    $this->assertEquals($this->expected, $actual);
+  }
+
+  public function testReturnsWithCelticPrefixO() {
+    $pre_process = new RecordPreProcessing(['Bob', "O'Town", '   bob@bobtown.com']);
+    $actual = $pre_process->pre_process();
+    $this->expected['surname'] = "O'Town";
+    $this->assertEquals($this->expected, $actual);
+  }
+
+  public function testReturnsWithCelticPrefixOLowercase() {
+    $pre_process = new RecordPreProcessing(['Bob', "o'town", '   bob@bobtown.com']);
+    $actual = $pre_process->pre_process();
+    $this->expected['surname'] = "O'Town";
+    $this->assertEquals($this->expected, $actual);
+  }
+
+  public function testReturnsWithCelticPrefixMac() {
+    $pre_process = new RecordPreProcessing(['Bob', 'MacTown', '   bob@bobtown.com']);
+    $actual = $pre_process->pre_process();
+    $this->expected['surname'] = 'MacTown';
     $this->assertEquals($this->expected, $actual);
   }
 }

@@ -50,9 +50,7 @@ class CreateUsersTable
     $statement = $this->mysqli->prepare($sql);
     $statement->bind_param('sss', $first_name, $surname, $email);
 
-    if($statement->execute()){
-      echo "Records inserted successfully\n\n";
-    } else{
+    if(!$statement->execute()){
       echo "Warning: Could not insert record into database. " . mysqli_error($this->mysqli) . "\n\n";
     }
   }

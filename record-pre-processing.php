@@ -16,7 +16,7 @@ class RecordPreProcessing
 
   public function pre_process() {
     if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-      echo 'Invalid email: ' . $this->email . ' provided for ' . $this->first_name . ' ' . $this->surname . "\n";
+      echo 'Invalid email: ' . $this->email . ' provided for ' . $this->first_name . ' ' . $this->surname . "\n\n";
       return false;
     } else {
       return array (
@@ -27,9 +27,19 @@ class RecordPreProcessing
     }
   }
 
+  // Characters that are not letters e.g. ! are accepted as valid.
   private function clean_name($unclean_name) {
-    //O', McKee, MacKay, Sam!!!
-    return ucfirst(strtolower(trim($unclean_name)));
+    $prefixes = array("O'", "o'", 'Mc', 'mc', 'Mac', 'mac');
+    foreach ($prefixes as $prefix) {
+      $pos = strpos($unclean_name, $prefix);
+      $celtic_prefix = '';
+      if ($pos === 0) {
+        $unclean_name = substr($unclean_name, strlen($prefix));
+        $celtic_prefix = ucfirst($prefix);
+        break;
+      }
+    }
+    return $celtic_prefix . ucfirst(strtolower(trim($unclean_name)));
   }
 
   private function clean_email($unclean_email) {

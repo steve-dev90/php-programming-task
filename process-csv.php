@@ -28,6 +28,7 @@ class ProcessCsv
     if (!$handle) {
       throw new RuntimeException ('Encountered an error while reading CSV file: ' . $this->file . "\n\n");
     }
+    echo "CSV processing started ...\n\n";
     return $handle;
   }
 
@@ -40,11 +41,11 @@ class ProcessCsv
       }
       $this->process_row($data);
     }
+    echo "CSV processing finished! \n\n";
     fclose($this->handle);
   }
 
   private function process_row($data) {
-    var_dump($data);
     $data_process = new RecordPreProcessing($data);
     $pre_processed_data = $data_process->pre_process();
     if ($pre_processed_data && !$this->dry_run) {
