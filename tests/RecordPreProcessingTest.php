@@ -5,8 +5,7 @@ require './record-pre-processing.php';
 
 class RecordPreProcessingTest extends TestCase {
 
-  protected function setUp()
-  {
+  protected function setUp() {
     $this->expected = array (
       'first_name' => 'Bob',
       'surname' => 'Town',
@@ -14,40 +13,34 @@ class RecordPreProcessingTest extends TestCase {
     );
   }
 
-  public function testReturnsWithValidEmail()
-  {
+  public function testReturnsWithValidEmail() {
     $pre_process = new RecordPreProcessing(['Bob', 'Town', 'bob@bobtown.com']);
     $actual = $pre_process->pre_process();
     $this->assertEquals($this->expected, $actual);
   }
 
-  public function testReturnsFalseWithInvalidEmail()
-  {
+  public function testReturnsFalseWithInvalidEmail() {
     $pre_process = new RecordPreProcessing(['Bob', 'Town', 'bob@bob@town.com']);
     $actual = $pre_process->pre_process();
     $expected = false;
     $this->assertEquals($expected, $actual);
   }
 
-  public function testReturnsCapitalisedFirstName()
-  {
+  public function testReturnsWithLowerCaseFirstName() {
     $pre_process = new RecordPreProcessing(['bob', 'Town', 'bob@bobtown.com']);
     $actual = $pre_process->pre_process();
     $this->assertEquals($this->expected, $actual);
   }
 
-  public function testReturnsCapitalisedSurname()
-  {
+  public function testReturnsWithMixedCaseSurname() {
     $pre_process = new RecordPreProcessing(['Bob', 'tOWN', 'bob@bobtown.com']);
     $actual = $pre_process->pre_process();
     $this->assertEquals($this->expected, $actual);
   }
 
-  public function testReturnsWithEmailTrailingWhiteSpace()
-  {
+  public function testReturnsWithEmailWithTrailingWhiteSpace() {
     $pre_process = new RecordPreProcessing(['Bob', 'tOWN', '   bob@bobtown.com']);
     $actual = $pre_process->pre_process();
     $this->assertEquals($this->expected, $actual);
   }
-
 }

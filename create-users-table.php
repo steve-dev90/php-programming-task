@@ -4,6 +4,8 @@
 
 class CreateUsersTable
 {
+  private $mysqli;
+
   public function __construct($config) {
     $this->mysqli = new mysqli(
       $config->get_host(),
@@ -16,11 +18,11 @@ class CreateUsersTable
     if (mysqli_connect_error()) {
       throw new RuntimeException ('Could not connect to database, please check your configuration options. Error: ' . mysqli_connect_error() . "\n\n");
     }
-    echo 'Connected to database successfully\n\n';
+    echo "Connected to database successfully\n\n";
   }
 
-  public function createUsersTable() {
-    $this->removeExistingUsersTable();
+  public function create_users_table() {
+    $this->remove_existing_users_table();
     // Attempt create table query execution
     $sql = "CREATE TABLE users(
       id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -34,7 +36,7 @@ class CreateUsersTable
     }
   }
 
-  public function removeExistingUsersTable() {
+  private function remove_existing_users_table() {
     $sql = "DROP TABLE IF EXISTS users";
 
     if(!mysqli_query($this->mysqli, $sql)) {
@@ -42,7 +44,7 @@ class CreateUsersTable
     }
   }
 
-  public function insertUser($first_name, $surname, $email) {
+  public function insert_user($first_name, $surname, $email) {
     // Attempt insert query execution
     $sql = "INSERT INTO users (first_name, surname, email) VALUES (?, ?, ?)";
     $statement = $this->mysqli->prepare($sql);

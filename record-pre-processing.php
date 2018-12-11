@@ -16,7 +16,7 @@ class RecordPreProcessing
 
   public function pre_process() {
     if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
-      echo 'Invalid email: ' . $this->email . ' provided for ' . $this->first_name . '' . $this->surname . "\n";
+      echo 'Invalid email: ' . $this->email . ' provided for ' . $this->first_name . ' ' . $this->surname . "\n";
       return false;
     } else {
       return array (

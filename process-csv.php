@@ -14,7 +14,7 @@ class ProcessCsv
     $this->dry_run = $dry_run;
     if (!$dry_run) {
       $this->db = new CreateUsersTable($db_config);
-      $this->db->createUsersTable();
+      $this->db->create_users_table();
     }
   }
 
@@ -43,7 +43,7 @@ class ProcessCsv
     $data_process = new RecordPreProcessing($data);
     $pre_processed_data = $data_process->pre_process();
     if ($pre_processed_data && !$this->dry_run) {
-      $this->db->insertUser(
+      $this->db->insert_user(
         $pre_processed_data['first_name'],
         $pre_processed_data['surname'],
         $pre_processed_data['email']
