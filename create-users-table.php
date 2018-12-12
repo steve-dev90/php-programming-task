@@ -4,24 +4,20 @@
 
 class CreateUsersTable
 {
-  public function __construct($config) {
-    $this->mysqli = new mysqli(
-      $config->get_host(),
-      $config->get_user_name(),
-      $config->get_password(),
-      $config->get_database(),
-      $config->get_port()
-    );
+  private $mysqli;
+
+  public function __construct ($user_name, $password, $host, $port, $database) {
+    $this->mysqli = new mysqli ($host, $user_name, $password, $database, $port);
 
     if (mysqli_connect_error()) {
       throw new RuntimeException ('Could not connect to database, please check your configuration options. Error: ' . mysqli_connect_error() . "\n\n");
     }
-    echo 'Connected to database successfully\n\n';
+    echo "Connected to database successfully\n\n";
   }
 
-  public function createUsersTable() {
-    $this->removeExistingUsersTable();
-    // Attempt create table query execution
+  public function create_users_table() {
+    $this->remove_existing_users_table();
+
     $sql = "CREATE TABLE users(
       id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
       first_name VARCHAR(30) NOT NULL,
@@ -34,7 +30,7 @@ class CreateUsersTable
     }
   }
 
-  public function removeExistingUsersTable() {
+  private function remove_existing_users_table() {
     $sql = "DROP TABLE IF EXISTS users";
 
     if(!mysqli_query($this->mysqli, $sql)) {
@@ -42,15 +38,13 @@ class CreateUsersTable
     }
   }
 
-  public function insertUser($first_name, $surname, $email) {
+  public function insert_user($first_name, $surname, $email) {
     // Attempt insert query execution
     $sql = "INSERT INTO users (first_name, surname, email) VALUES (?, ?, ?)";
     $statement = $this->mysqli->prepare($sql);
     $statement->bind_param('sss', $first_name, $surname, $email);
 
-    if($statement->execute()){
-      echo "Records inserted successfully\n\n";
-    } else{
+    if(!$statement->execute()){
       echo "Warning: Could not insert record into database. " . mysqli_error($this->mysqli) . "\n\n";
     }
   }

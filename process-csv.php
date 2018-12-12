@@ -1,21 +1,41 @@
 <?php
 
-require './record-pre-processing.php';
-require './create-users-table.php';
+require_once './record-pre-processing.php';
+require_once './create-users-table.php';
 
 class ProcessCsv
 {
-  public function __construct($file, $dry_run, $db_config) {
-    if(!is_file($file) || !is_readable($file)) {
-      throw new RuntimeException ('The csv file could not be opened for reading. File: ' . $file . "\n\n");
+  private $file;
+  private $handle;
+  private $dry_run;
+  private $db;
+
+  public function __construct($options) {
+    $this->file = $options['file'];
+    if(!is_file($this->file) || !is_readable($this->file)) {
+      throw new RuntimeException ('The csv file could not be opened for reading. File: ' . $this->file . "\n\n");
     }
-    $this->file = $file;
     $this->handle = $this->get_csv_handle();
-    $this->dry_run = $dry_run;
-    if (!$dry_run) {
-      $this->db = new CreateUsersTable($db_config);
-      $this->db->createUsersTable();
+    $this->dry_run = array_key_exists("dry_run", $options);
+    if (!$this->dry_run) {
+      $this->db = new CreateUsersTable (
+        $options['u'],
+        $options['p'],
+        $options['h'],
+        $options['t'],
+        $options['d']
+      );
+      $this->db->create_users_table();
     }
+  }
+
+  private function get_csv_handle() {
+    $handle = fopen($this->file, 'r');
+    if (!$handle) {
+      throw new RuntimeException ('Encountered an error while reading CSV file: ' . $this->file . "\n\n");
+    }
+    echo "CSV processing started ...\n\n";
+    return $handle;
   }
 
   public function process() {
@@ -27,23 +47,15 @@ class ProcessCsv
       }
       $this->process_row($data);
     }
+    echo "CSV processing finished! \n\n";
     fclose($this->handle);
   }
 
-  private function get_csv_handle() {
-    $handle = fopen($this->file, 'r');
-    if (!$handle) {
-      throw new RuntimeException ('Encountered an error while reading CSV file: ' . $this->file . "\n\n");
-    }
-    return $handle;
-  }
-
   private function process_row($data) {
-    var_dump($data);
     $data_process = new RecordPreProcessing($data);
-    $pre_processed_data = $data_process->preProcess();
+    $pre_processed_data = $data_process->pre_process();
     if ($pre_processed_data && !$this->dry_run) {
-      $this->db->insertUser(
+      $this->db->insert_user(
         $pre_processed_data['first_name'],
         $pre_processed_data['surname'],
         $pre_processed_data['email']
