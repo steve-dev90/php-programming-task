@@ -1,7 +1,6 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-require_once './cli-errors.php';
 
 class CliErrorsTest extends TestCase
 {
@@ -31,7 +30,6 @@ class CliErrorsTest extends TestCase
   public function testExceptionNoDryRunAndCreateTable() {
     $this->expectException(InvalidArgumentException::class);
     $options['file'] = 'file1.csv';
-    var_dump($options['file']);
     $err = new CliErrors($options);
     $err->check_for_errors();
   }

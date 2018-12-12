@@ -1,7 +1,6 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-require_once './record-pre-processing.php';
 
 class RecordPreProcessingTest extends TestCase
 {

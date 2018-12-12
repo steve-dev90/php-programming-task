@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-require_once './process-csv.php';
+require_once './tests/test-database.php';
 
 class ProcessCsvTest extends TestCase
 {
@@ -10,11 +10,11 @@ class ProcessCsvTest extends TestCase
 
   protected function setUp() {
     $this->test = new TestDatabase();
-    $this->options['u'] = 'root';
-    $this->options['p'] = 'root';
-    $this->options['h'] = '127.0.0.1';
-    $this->options['t'] = '8889';
-    $this->options['d'] = 'progtasktest';
+    $this->options['u'] = T_USER_NAME;
+    $this->options['p'] = T_PASSWORD;
+    $this->options['h'] = T_HOST;
+    $this->options['t'] = T_PORT;
+    $this->options['d'] = T_DATABASE;
   }
 
   protected function tearDown() {
@@ -37,7 +37,7 @@ class ProcessCsvTest extends TestCase
     $csv = new ProcessCsv($this->options);
     $csv->process();
     $result = mysqli_query($this->test->get_mysqli(), 'SELECT * FROM users');
-    $this->assertEquals(0, mysqli_num_rows($result));
+    $this->assertEquals(false, $result);
     unset($this->options['dry_tun']);
   }
 
