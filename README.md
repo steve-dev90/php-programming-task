@@ -6,7 +6,7 @@ Command line utility to upload a csv containing users data and to save this data
 ## Install instructions
 To install the utility:
 1. Clone the repo on your machine : `git clone https://github.com/steve-dev90/php-programming-task.git`.
-2. Configure the mysql database. The default database name is set to `progtask` and the default database port is set to `8889`. If these defaults are not correct for your environment they can be changed. See user instructions below.
+2. Create and configure a mysql database. The default database name is set to `progtask` and the default database port is set to `8889`. If these defaults are not correct for your machine they can be changed. See user instructions below.
 3. Configure the test database. To run the test suite, a test database with the following configuration must be set up:
 - host: 127.0.0.1
 - user name: root
