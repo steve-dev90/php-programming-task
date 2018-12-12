@@ -1,9 +1,9 @@
-## Catalyst programming task
+# Catalyst programming task
 
-# Introduction
+## Introduction
 Command line utility to upload a csv containing users data and to save this data to a database.
 
-# Install instructions
+## Install instructions
 To install the utility:
 1. Clone the repo on your machine : `git clone https://github.com/steve-dev90/php-programming-task.git`.
 2. Configure the mysql database. The default database name is set to `progtask` and the default database port is set to `8889`. If these defaults are not correct for your environment they can be changed. See user instructions below.
@@ -16,7 +16,7 @@ To install the utility:
 4. Run composer to set up phpunit for testing : `composer install`. This assumes composer is on the $PATH of your machine. The utility itself does not rely on any dependencies installed via composer.
 5. To run the test suite : `phpunit test/[testname]`.
 
-# User instructions
+## User instructions
 To run the utility : `./vendor/bin/phpunit tests/`.
 
 Options:
@@ -31,7 +31,7 @@ Options:
 -d='MySQL database' ; optional, default = 'progtask'.\n
 --help ; which will output the above list of directives with details. No further action will be taken
 
-# Examples
+## Examples
 
 `php user_upload.php --help`
 -> Will list utility directives. No other action taken even if other options provided.
