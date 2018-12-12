@@ -10,6 +10,11 @@ class ProcessCsvTest extends TestCase
 
   protected function setUp() {
     $this->test = new TestDatabase();
+    $this->options['u'] = 'root';
+    $this->options['p'] = 'root';
+    $this->options['h'] = '127.0.0.1';
+    $this->options['t'] = '8889';
+    $this->options['d'] = 'progtasktest';
   }
 
   protected function tearDown() {
@@ -21,25 +26,32 @@ class ProcessCsvTest extends TestCase
 
   public function testWithInvalidFileName() {
     $this->expectException(RuntimeException::class);
-    $csv = new ProcessCsv('wrong.csv', false, '');
+    $this->options['file'] = 'wrong.csv';
+    $this->options['dry_run'] = false;
+    $csv = new ProcessCsv($this->options);
   }
 
   public function testDryRun() {
-    $csv = new ProcessCsv('./tests/user_test_valid_emails.csv', true, '');
+    $this->options['file'] = './tests/user_test_valid_emails.csv';
+    $this->options['dry_run'] = false;
+    $csv = new ProcessCsv($this->options);
     $csv->process();
     $result = mysqli_query($this->test->get_mysqli(), 'SELECT * FROM users');
     $this->assertEquals(0, mysqli_num_rows($result));
+    unset($this->options['dry_tun']);
   }
 
   public function testCreateTableWithValidEmails() {
-    $csv = new ProcessCsv('./tests/user_test_valid_emails.csv', false, $this->test->get_db_config());
+    $this->options['file'] = './tests/user_test_valid_emails.csv';
+    $csv = new ProcessCsv($this->options);
     $csv->process();
     $result = mysqli_query($this->test->get_mysqli(), 'SELECT * FROM users');
     $this->assertEquals(2, mysqli_num_rows($result));
   }
 
   public function testCreateTableWithInvalidEmails() {
-    $csv = new ProcessCsv('./tests/user_test_invalid_emails.csv', false, $this->test->get_db_config());
+    $this->options['file'] = './tests/user_test_invalid_emails.csv';
+    $csv = new ProcessCsv($this->options);
     $csv->process();
     $result = mysqli_query($this->test->get_mysqli(), 'SELECT * FROM users');
     $this->assertEquals(2, mysqli_num_rows($result));

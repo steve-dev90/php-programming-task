@@ -3,7 +3,6 @@
 class TestDatabase
 {
   public $db;
-  public $db_config;
   public $mysqli;
 
   const USER_NAME = 'root';
@@ -13,16 +12,14 @@ class TestDatabase
   const DATABASE = 'progtasktest';
 
   public function __construct() {
-    $this->db_config = new DatabaseConfig (
-      self::USER_NAME,
-      self::PASSWORD,
-      self::HOST,
-      self::PORT,
-      self::DATABASE
-    );
-
     try {
-      $this->db = new CreateUsersTable ($this->db_config);
+      $this->db = new CreateUsersTable (
+        self::USER_NAME,
+        self::PASSWORD,
+        self::HOST,
+        self::PORT,
+        self::DATABASE
+      );
       $this->db->create_users_table();
       $this->mysqli = new mysqli(
         self::HOST,
@@ -42,9 +39,5 @@ class TestDatabase
 
   public function get_mysqli() {
     return $this->mysqli;
-  }
-
-  public function get_db_config() {
-    return $this->db_config;
   }
 }

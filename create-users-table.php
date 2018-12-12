@@ -6,14 +6,8 @@ class CreateUsersTable
 {
   private $mysqli;
 
-  public function __construct($config) {
-    $this->mysqli = new mysqli(
-      $config->get_host(),
-      $config->get_user_name(),
-      $config->get_password(),
-      $config->get_database(),
-      $config->get_port()
-    );
+  public function __construct ($user_name, $password, $host, $port, $database) {
+    $this->mysqli = new mysqli ($host, $user_name, $password, $database, $port);
 
     if (mysqli_connect_error()) {
       throw new RuntimeException ('Could not connect to database, please check your configuration options. Error: ' . mysqli_connect_error() . "\n\n");
@@ -23,7 +17,7 @@ class CreateUsersTable
 
   public function create_users_table() {
     $this->remove_existing_users_table();
-    // Attempt create table query execution
+
     $sql = "CREATE TABLE users(
       id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
       first_name VARCHAR(30) NOT NULL,

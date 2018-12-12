@@ -10,15 +10,21 @@ class ProcessCsv
   private $dry_run;
   private $db;
 
-  public function __construct($file, $dry_run, $db_config) {
-    if(!is_file($file) || !is_readable($file)) {
-      throw new RuntimeException ('The csv file could not be opened for reading. File: ' . $file . "\n\n");
+  public function __construct($options) {
+    $this->file = $options['file'];
+    if(!is_file($this->file) || !is_readable($this->file)) {
+      throw new RuntimeException ('The csv file could not be opened for reading. File: ' . $this->file . "\n\n");
     }
-    $this->file = $file;
     $this->handle = $this->get_csv_handle();
-    $this->dry_run = $dry_run;
-    if (!$dry_run) {
-      $this->db = new CreateUsersTable($db_config);
+    $this->dry_run = array_key_exists("dry_run", $options);
+    if (!$this->dry_run) {
+      $this->db = new CreateUsersTable (
+        $options['u'],
+        $options['p'],
+        $options['h'],
+        $options['t'],
+        $options['d']
+      );
       $this->db->create_users_table();
     }
   }

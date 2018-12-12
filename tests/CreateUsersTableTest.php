@@ -2,7 +2,6 @@
 
 use PHPUnit\Framework\TestCase;
 require_once './create-users-table.php';
-require_once './database-config.php';
 require_once './tests/test-database.php';
 
 class CreateUsersTableTest extends TestCase
