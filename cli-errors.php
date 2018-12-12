@@ -11,8 +11,6 @@ class CliErrors
   }
 
   public function check_for_errors() {
-    $errors = array();
-
     if (!array_key_exists('file', $this->options)) {
       throw new BadMethodCallException ("Please specify the file option, use format --file='myfile.csv'\n\n");
     }
@@ -37,6 +35,8 @@ class CliErrors
         throw new InvalidArgumentException ("Please make sure you have specified each database configuration option only once\n\n");
       }
     }
+
+    return true;
   }
 
   private function two_many_long_options() {
