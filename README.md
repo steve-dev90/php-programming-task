@@ -17,10 +17,10 @@ To install the utility:
   Alternatively, change the test database configuration to suit by editing the constants in test-database.php
 
 4. Run composer to set up phpunit for testing : `composer install`. This assumes composer is on the $PATH of your machine. The utility itself does not rely on any dependencies installed via composer.
-5. To run the test suite : `phpunit test/[testname]`.
+5. To run the test suite : `./vendor/bin/phpunit tests/`.
 
 ## User instructions
-To run the utility : `./vendor/bin/phpunit tests/`.
+To run the utility : `php user_upload.php [options]`.
 
 Options:
 
