@@ -1,7 +1,7 @@
 # Catalyst programming task
 
 ## Introduction
-Command line utility to upload a csv containing users data and to save this data to a database.
+Command line utility to upload users data from a csv and to then save this data to a database.
 
 ## Install instructions
 To install the utility:
