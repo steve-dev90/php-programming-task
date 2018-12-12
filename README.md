@@ -22,25 +22,28 @@ To run the utility : `./vendor/bin/phpunit tests/`.
 
 Options:
 
-- `--file='csv file name'` ; this is the name of the CSV to be parsed. Required if either --create_table or --dry_run are used.
-- `--create_table` ; this will cause the MySQL users table to be built (and no further action will be taken). Optional.
-- `--dry_run` ; this will be used with --file where we want to run the script but not insert the csv records into the database. All other functions will be executed. Optional.
-- `-u='MySQL username'` ; required if create_table used.\n
-- `-p='MySQL password'` ; required if create_table used.\n
-- `-h='MySQL host'` ; required if create_table used.\n
-- `-t='MySQL port'` ; optional, default = '8889'. \n
-- `-d='MySQL database'` ; optional, default = 'progtask'.\n
-- `--help` ; which will output the above list of directives with details. No further action will be taken
+- `--file='csv file name'` This is the name of the CSV to be parsed. Required if either --create_table or --dry_run are used.
+- `--create_table` This will cause the MySQL users table to be built (and no further action will be taken). Optional.
+- `--dry_run` This will be used with --file where we want to run the script but not insert the csv records into the database. All other functions will be executed. Optional.
+- `-u='MySQL username'` Required if create_table used.
+- `-p='MySQL password'` Required if create_table used.
+- `-h='MySQL host'` Required if create_table used.
+- `-t='MySQL port'` Optional, default = '8889'.
+- `-d='MySQL database'` Optional, default = 'progtask'.
+- `--help` Which will output the above list of directives with details. No further action will be taken.
 
 ## Examples
 
-`php user_upload.php --help` \n
+`php user_upload.php --help`
+
 => Will list utility directives. No other action taken even if other options provided.
 
 `php user_upload.php --file='users.csv' --dry_run`
+
 => Will parse the csv and validate the csv records. No records will be inserted into the database.
 
 `php user_upload.php --file='users.csv' --create-table -u='root' -p='root' -h='127.0.0.1`
+
 => Will parse the csv, validate the csv records and save them to the database.
 
 
