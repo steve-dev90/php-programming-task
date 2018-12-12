@@ -29,6 +29,7 @@ class RecordPreProcessing
 
   // Characters that are not letters e.g. ! are accepted as valid.
   private function clean_name($unclean_name) {
+    $unclean_name = trim($unclean_name);
     $prefixes = array("O'", "o'", 'Mc', 'mc', 'Mac', 'mac');
     foreach ($prefixes as $prefix) {
       $pos = strpos($unclean_name, $prefix);
@@ -39,7 +40,7 @@ class RecordPreProcessing
         break;
       }
     }
-    return $celtic_prefix . ucfirst(strtolower(trim($unclean_name)));
+    return $celtic_prefix . ucfirst(strtolower($unclean_name));
   }
 
   private function clean_email($unclean_email) {

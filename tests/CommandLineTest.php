@@ -1,7 +1,6 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-// require_once './command-line.php';
 require_once './tests/test-database.php';
 
 class CommandLineTest extends TestCase
@@ -23,10 +22,10 @@ class CommandLineTest extends TestCase
   public function testUtilityNoOptionalPortConfig() {
     $options['file'] = './tests/user_test_valid_emails.csv';
     $options['create_table'] = false;
-    $options['u'] = 'root';
-    $options['p'] = 'root';
-    $options['h'] = '127.0.0.1';
-    $options['d'] = 'progtasktest';
+    $options['u'] = T_USER_NAME;
+    $options['p'] = T_PASSWORD;
+    $options['h'] = T_HOST;
+    $options['d'] = T_DATABASE;
     $utility = new CommandLine($options);
     $utility->process_commands();
     $result = mysqli_query($this->test->get_mysqli(), 'SELECT * FROM users');
