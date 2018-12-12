@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-require_once './cli-errors.php';
+// require_once './cli-errors.php';
 
 class CliErrorsTest extends TestCase
 {

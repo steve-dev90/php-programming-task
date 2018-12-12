@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-require_once './command-line.php';
+// require_once './command-line.php';
 require_once './tests/test-database.php';
 
 class CommandLineTest extends TestCase
