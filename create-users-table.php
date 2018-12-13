@@ -18,12 +18,12 @@ class CreateUsersTable
   public function create_users_table() {
     $this->remove_existing_users_table();
 
-    $sql = "CREATE TABLE users(
+    $sql = 'CREATE TABLE users(
       id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
       first_name VARCHAR(30) NOT NULL,
       surname VARCHAR(30) NOT NULL,
       email VARCHAR(70) NOT NULL UNIQUE
-    )";
+    )';
 
     if(!mysqli_query($this->mysqli, $sql)){
       throw new RuntimeException ('Could not create users table. Error: ' . mysqli_error($this->mysqli) . "\n\n");
@@ -31,7 +31,7 @@ class CreateUsersTable
   }
 
   private function remove_existing_users_table() {
-    $sql = "DROP TABLE IF EXISTS users";
+    $sql = 'DROP TABLE IF EXISTS users';
 
     if(!mysqli_query($this->mysqli, $sql)) {
       throw new RuntimeException ('Could not delete existing users table. Error: ' . mysqli_error($this->mysqli) . "\n\n");
@@ -40,12 +40,12 @@ class CreateUsersTable
 
   public function insert_user($first_name, $surname, $email) {
     // Attempt insert query execution
-    $sql = "INSERT INTO users (first_name, surname, email) VALUES (?, ?, ?)";
+    $sql = 'INSERT INTO users (first_name, surname, email) VALUES (?, ?, ?)';
     $statement = $this->mysqli->prepare($sql);
     $statement->bind_param('sss', $first_name, $surname, $email);
 
     if(!$statement->execute()){
-      echo "Warning: Could not insert record into database. " . mysqli_error($this->mysqli) . "\n\n";
+      echo 'Warning: Could not insert record into database. ' . mysqli_error($this->mysqli) . "\n\n";
     }
   }
 

@@ -17,6 +17,6 @@ class Help
     -t='MySQL port' ; optional, default = '8889' \n
     -d='MySQL database' ; optional, default = 'progtask'\n
     --help ; which will output the above list of directives with details.
-    No further action will be taken\n";
+    No further action will be taken\n\n";
   }
 }
