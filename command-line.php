@@ -12,10 +12,10 @@ class CommandLine
 
   public function __construct($options) {
     $this->options = $options;
-    if (!array_key_exists("d", $this->options)) {
+    if (!array_key_exists('d', $this->options)) {
       $this->options['d'] = 'progtask';
     }
-    if (!array_key_exists("t", $this->options)) {
+    if (!array_key_exists('t', $this->options)) {
       $this->options['t'] = '8889';
     }
   }

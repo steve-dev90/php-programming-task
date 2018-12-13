@@ -2,12 +2,12 @@
 
 require_once './command-line.php';
 
-$short_options = "u:p:h:t::d::";
+$short_options = 'u:p:h:t::d::';
 $long_options  = array(
-  "help",
-  "file:",
-  "dry_run",
-  "create_table"
+  'help',
+  'file:',
+  'dry_run',
+  'create_table'
 );
 
 $options = getopt($short_options, $long_options);
