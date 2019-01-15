@@ -1,4 +1,4 @@
-# Catalyst programming task
+# PHP Command Line Utility to Upload User Data
 
 ## Introduction
 Command line utility to upload users data from a csv and to then save this data to a database.
